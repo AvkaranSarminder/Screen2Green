@@ -10,7 +10,15 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(body: Center(child: ToastButton('Show Toast'))),
+      home: Scaffold(
+        body: Center(child: ToastButton('Show Toast')),
+        appBar: AppBar(
+          title: Align(
+            alignment: Alignment.centerLeft,
+            child: Text('Screen2Green'),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -43,17 +51,10 @@ class ToastButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // In Flutter, instead of using classic class inheritance (extends MySpecialButton),
-    // we use "Composition". We simply return our original custom widget inside our build method!
-    // This allows us to reuse the design of MySpecialButton, while giving our new widget 
-    // a valid BuildContext to safely show the toast message!
-    return MySpecialButton(
-      label,
-      () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: MyToastContent()),
-        );
-      },
-    );
+    return MySpecialButton(label, () {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: MyToastContent()));
+    });
   }
 }
