@@ -13,9 +13,9 @@ class MainApp extends StatelessWidget {
       home: Scaffold(
         body: Center(child: ToastButton('Show Toast')),
         appBar: AppBar(
-          title: Align(
-            alignment: Alignment.centerLeft,
-            child: Text('Screen2Green'),
+          title: Image.asset(
+            'assets/images/tempor-removebg-preview.png',
+            height: 61,
           ),
         ),
       ),
