@@ -58,3 +58,22 @@ class ToastButton extends StatelessWidget {
     });
   }
 }
+
+class MySpecialTextField extends StatelessWidget {
+  MySpecialTextField({super.key, required this.handleSubmit});
+
+  final void Function(String) handleSubmit;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      maxLength: 10,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(35)),
+        ),
+        labelText: 'Enter your firstname',
+      ),
+    );
+  }
+}
