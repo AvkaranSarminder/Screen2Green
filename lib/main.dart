@@ -66,7 +66,9 @@ class MySpecialTextField extends StatelessWidget {
 
   final void Function(String) handleSubmit;
 
-  final TextEditingController controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
+
+  final FocusNode _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -77,12 +79,15 @@ class MySpecialTextField extends StatelessWidget {
         ),
         labelText: 'Enter your firstname',
       ),
-      controller: controller,
+      controller: _controller,
+      focusNode: _focusNode,
+      autofocus: true,
       onSubmitted: (text) {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: MyToastContent('Hello $text!')));
-        controller.clear();
+        _controller.clear();
+        _focusNode.requestFocus();
       },
     );
   }
