@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:screen2green/views/home_view.dart';
+import 'package:screen2green/views/main_view.dart';
 
 void main() {
   runApp(const MainApp());
@@ -13,7 +13,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       title: 'Screen2Green',
       theme: myAppTheme,
-      home: const HomeView(),
+      home: const MainView(),
     );
   }
 }
