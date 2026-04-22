@@ -33,7 +33,7 @@ final ThemeData myAppTheme = ThemeData(
       fontWeight: FontWeight.bold,
     ),
     titleLarge: TextStyle(fontFamily: 'LeagueSpartan'),
-    bodyLarge: TextStyle(fontFamily: 'UniverseCondensed'),
-    bodyMedium: TextStyle(fontFamily: 'UniverseCondensed'),
+    bodyLarge: TextStyle(fontFamily: 'LeagueSpartan'),
+    bodyMedium: TextStyle(fontFamily: 'LeagueSpartan'),
   ),
 );
