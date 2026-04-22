@@ -24,11 +24,13 @@ class MainApp extends StatelessWidget {
 }
 
 class MyToastContent extends StatelessWidget {
-  const MyToastContent({super.key});
+  const MyToastContent(this.label, {super.key});
+
+  final String label;
 
   @override
   Widget build(BuildContext context) {
-    return const Text('Hello! I am a simple toast! 🍞');
+    return Text(label);
   }
 }
 
@@ -52,9 +54,9 @@ class ToastButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MySpecialButton(label, () {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: MyToastContent()));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: MyToastContent('Yoooo button pressed here!')),
+      );
     });
   }
 }
@@ -64,16 +66,23 @@ class MySpecialTextField extends StatelessWidget {
 
   final void Function(String) handleSubmit;
 
+  final TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return TextField(
-      maxLength: 10,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(35)),
         ),
         labelText: 'Enter your firstname',
       ),
+      controller: controller,
+      onSubmitted: (text) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: MyToastContent('Hello $text!')));
+      },
     );
   }
 }
