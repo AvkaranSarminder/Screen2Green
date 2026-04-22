@@ -18,12 +18,6 @@ class HomeView extends StatelessWidget {
           ),
         ),
       ),
-      appBar: AppBar(
-        title: Image.asset(
-          'assets/images/tempor-removebg-preview.png',
-          height: 61,
-        ),
-      ),
     );
   }
 }

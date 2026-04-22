@@ -31,6 +31,12 @@ class _MainScreenState extends State<MainView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Image.asset(
+          'assets/images/tempor-removebg-preview.png',
+          height: 61,
+        ),
+      ),
       body: PageView(
         controller: _pageController,
         onPageChanged: (index) {
@@ -47,12 +53,11 @@ class _MainScreenState extends State<MainView> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        type: BottomNavigationBarType.fixed, // Necessary for more than 3 items
+        type: BottomNavigationBarType.fixed,
         selectedItemColor: Theme.of(context).colorScheme.primary,
         unselectedItemColor: Colors.grey,
-        // Text styling
         selectedLabelStyle: const TextStyle(
-          fontSize: 14,
+          fontSize: 15,
           fontWeight: FontWeight.bold,
           fontFamily: 'LeagueSpartan',
         ),
@@ -66,12 +71,12 @@ class _MainScreenState extends State<MainView> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.filter_vintage),
-            label: 'Garden',
+            label: 'GARDEN',
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.eco), label: 'My Plant'),
-          BottomNavigationBarItem(icon: Icon(Icons.timer), label: 'Focus'),
-          BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Journey'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(icon: Icon(Icons.eco), label: 'MY PLANT'),
+          BottomNavigationBarItem(icon: Icon(Icons.timer), label: 'FOCUS'),
+          BottomNavigationBarItem(icon: Icon(Icons.map), label: 'JOURNEY'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'PROFILE'),
         ],
       ),
     );
