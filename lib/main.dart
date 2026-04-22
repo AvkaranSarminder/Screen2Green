@@ -82,6 +82,7 @@ class MySpecialTextField extends StatelessWidget {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: MyToastContent('Hello $text!')));
+        controller.clear();
       },
     );
   }
