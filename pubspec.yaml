@@ -20,6 +20,6 @@ flutter:
   assets:
     - assets/images/tempor-removebg-preview.png
   fonts:
-    - family: LeagueSpartan:
-      fonts: 
-        - assets: assets\fonts\LeagueSpartan-VariableFont_wght.ttf
+    - family: LeagueSpartan
+      fonts:
+        - asset: assets/fonts/LeagueSpartan-VariableFont_wght.ttf
