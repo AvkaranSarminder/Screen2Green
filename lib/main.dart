@@ -70,23 +70,40 @@ class MySpecialTextField extends StatelessWidget {
 
   final FocusNode _focusNode = FocusNode();
 
+  void handleInput() {
+    handleSubmit(_controller.text.trim());
+    _controller.clear();
+    _focusNode.requestFocus();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(35)),
+    return Row(
+      children: [
+        Expanded(
+          child: TextField(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(35)),
+              ),
+              labelText: 'Enter your firstname',
+            ),
+            controller: _controller,
+            focusNode: _focusNode,
+            autofocus: true,
+            onSubmitted: (input) {
+              handleInput();
+            },
+          ),
         ),
-        labelText: 'Enter your firstname',
-      ),
-      controller: _controller,
-      focusNode: _focusNode,
-      autofocus: true,
-      onSubmitted: (text) {
-        handleSubmit(text);
-        _controller.clear();
-        _focusNode.requestFocus();
-      },
+        IconButton(
+          padding: EdgeInsets.zero,
+          icon: const Icon(Icons.arrow_circle_up),
+          onPressed: () {
+            handleInput();
+          },
+        ),
+      ],
     );
   }
 }
