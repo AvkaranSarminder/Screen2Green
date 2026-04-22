@@ -83,12 +83,29 @@ class MySpecialTextField extends StatelessWidget {
       focusNode: _focusNode,
       autofocus: true,
       onSubmitted: (text) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: MyToastContent('Hello $text!')));
+        handleSubmit(text);
         _controller.clear();
         _focusNode.requestFocus();
       },
+    );
+  }
+}
+
+class MyInputCollection extends StatelessWidget {
+  const MyInputCollection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        MySpecialTextField(
+          handleSubmit: (text) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: MyToastContent('Hello $text!')));
+          },
+        ),
+      ],
     );
   }
 }
