@@ -20,7 +20,6 @@ class _MainScreenState extends State<MainView> {
     setState(() {
       _selectedIndex = index;
     });
-    // Seamless transition using animateToPage
     _pageController.animateToPage(
       index,
       duration: const Duration(milliseconds: 300),
@@ -65,7 +64,6 @@ class _MainScreenState extends State<MainView> {
           fontSize: 12,
           fontFamily: 'LeagueSpartan',
         ),
-        // Icon scaling
         selectedIconTheme: const IconThemeData(size: 30),
         unselectedIconTheme: const IconThemeData(size: 24),
         items: const [
