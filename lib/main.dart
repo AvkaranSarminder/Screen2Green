@@ -11,7 +11,16 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Center(child: ToastButton('Show Toast')),
+        body: Center(
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [ToastButton('Show Toast'), MyInputCollection()],
+            ),
+          ),
+        ),
         appBar: AppBar(
           title: Image.asset(
             'assets/images/tempor-removebg-preview.png',
