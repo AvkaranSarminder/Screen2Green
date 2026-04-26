@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:screen2green/views/auth_view.dart';
 import 'package:screen2green/views/main_view.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -11,15 +12,32 @@ Future<void> main() async {
   runApp(MainApp());
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
+
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  final supabase = Supabase.instance.client;
+
+  @override
+  void initState() {
+    super.initState();
+    supabase.auth.onAuthStateChange.listen((data) {
+      setState(() {}); // rebuild to re-evaluate session
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Screen2Green',
       theme: myAppTheme,
-      home: const MainView(),
+      home: supabase.auth.currentSession != null
+          ? const MainView()
+          : const AuthView(),
     );
   }
 }
