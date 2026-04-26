@@ -45,7 +45,7 @@ class _AuthViewState extends State<AuthView> {
 
         final userId = response.user?.id;
         if (userId != null) {
-          await supabase.from('profiles').insert({
+          await supabase.from('users').insert({
             'id': userId,
             'first_name': _firstNameController.text.trim(),
             'last_name': _lastNameController.text.trim(),

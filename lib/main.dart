@@ -26,7 +26,7 @@ class _MainAppState extends State<MainApp> {
   void initState() {
     super.initState();
     supabase.auth.onAuthStateChange.listen((data) {
-      setState(() {}); // rebuild to re-evaluate session
+      setState(() {});
     });
   }
 
