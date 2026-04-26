@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'garden_page.dart';
-import 'my_plant_page.dart';
-import 'focus_page.dart';
-import 'journey_page.dart';
-import 'profile_page.dart';
+import 'garden_view.dart';
+import 'my_plant_view.dart';
+import 'focus_view.dart';
+import 'journey_view.dart';
+import 'profile_view.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
@@ -42,11 +42,11 @@ class _MainScreenState extends State<MainView> {
           setState(() => _selectedIndex = index);
         },
         children: const [
-          GardenPage(),
-          MyPlantPage(),
-          FocusPage(),
-          JourneyPage(),
-          ProfilePage(),
+          GardenView(),
+          MyPlantView(),
+          FocusView(),
+          JourneyView(),
+          ProfileView(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class JourneyPage extends StatelessWidget {
-  const JourneyPage({super.key});
+class FocusView extends StatelessWidget {
+  const FocusView({super.key});
 
   @override
   Widget build(BuildContext context) {

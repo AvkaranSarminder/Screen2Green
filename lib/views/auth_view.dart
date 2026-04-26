@@ -3,14 +3,14 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:screen2green/components/atoms/single_text_field.dart';
 import 'package:screen2green/components/atoms/my_special_button.dart';
 
-class AuthPage extends StatefulWidget {
-  const AuthPage({super.key});
+class AuthView extends StatefulWidget {
+  const AuthView({super.key});
 
   @override
-  State<AuthPage> createState() => _AuthPageState();
+  State<AuthView> createState() => _AuthViewState();
 }
 
-class _AuthPageState extends State<AuthPage> {
+class _AuthViewState extends State<AuthView> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _firstNameController = TextEditingController();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class MyPlantPage extends StatelessWidget {
-  const MyPlantPage({super.key});
+class GardenView extends StatelessWidget {
+  const GardenView({super.key});
 
   @override
   Widget build(BuildContext context) {
