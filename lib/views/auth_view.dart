@@ -127,4 +127,83 @@ class _AuthViewState extends State<AuthView> {
       ),
     );
   }
+
+  Widget _buildWelcomeScreen() {
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 28),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 24),
+            Expanded(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(24),
+                child: Image.asset(
+                  'assets/images/auth_plant.png',
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 36),
+
+            RichText(
+              text: const TextSpan(
+                style: TextStyle(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 40,
+                  color: Color(0xFF2F342E),
+                  height: 1.1,
+                  letterSpacing: -1,
+                ),
+                children: [
+                  TextSpan(text: 'Grow Your '),
+                  TextSpan(
+                    text: 'Focus',
+                    style: TextStyle(
+                      color: Color(0xFF50662B),
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 12),
+            const Text(
+              'Convert your productivity into botanical life. Cultivate your digital garden by staying present.',
+              style: TextStyle(
+                color: Color(0xFF5C605A),
+                height: 1.6,
+                fontSize: 14,
+              ),
+            ),
+            const SizedBox(height: 28),
+            Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: _GradientButton(
+                    'Create Account',
+                    () => setState(() => _screenMode = false),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  flex: 2,
+                  child: MySpecialButton(
+                    'Log In',
+                    () => setState(() => _screenMode = true),
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 32),
+          ],
+        ),
+      ),
+    );
+  }
 }
