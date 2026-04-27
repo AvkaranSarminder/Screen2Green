@@ -75,54 +75,66 @@ class _AuthViewState extends State<AuthView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                _isLogin ? 'Welcome back' : 'Create account',
-                style: Theme.of(context).textTheme.displayLarge,
+      body: _screenMode == null ? _buildWelcomeScreen() : _buildAuthScreen(),
+    );
+  }
+
+  Widget _buildAuthScreen() {
+    final isLogin = _screenMode == true;
+
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => setState(() => _screenMode = null),
               ),
-              const SizedBox(height: 32),
-              SingleTextField(controller: _emailController, label: 'Email'),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              isLogin ? 'Welcome back' : 'Create account',
+              style: Theme.of(context).textTheme.displayLarge,
+            ),
+            const SizedBox(height: 32),
+            SingleTextField(controller: _emailController, label: 'Email'),
+            const SizedBox(height: 16),
+            SingleTextField(
+              controller: _passwordController,
+              label: 'Password',
+              obscureText: true,
+            ),
+            if (!isLogin) ...[
               const SizedBox(height: 16),
               SingleTextField(
-                controller: _passwordController,
-                label: 'Password',
-                obscureText: true,
+                controller: _firstNameController,
+                label: 'First name',
               ),
-              if (!_isLogin) ...[
-                const SizedBox(height: 16),
-                SingleTextField(
-                  controller: _firstNameController,
-                  label: 'First name',
-                ),
-                const SizedBox(height: 16),
-                SingleTextField(
-                  controller: _lastNameController,
-                  label: 'Last name',
-                ),
-              ],
-              const SizedBox(height: 24),
-              _isLoading
-                  ? const CircularProgressIndicator()
-                  : MySpecialButton(
-                      _isLogin ? 'Log in' : 'Register',
-                      _handleAuth,
-                    ),
               const SizedBox(height: 16),
-              TextButton(
-                onPressed: () => setState(() => _isLogin = !_isLogin),
-                child: Text(
-                  _isLogin
-                      ? "Don't have an account? Register"
-                      : 'Already have an account? Log in',
-                ),
+              SingleTextField(
+                controller: _lastNameController,
+                label: 'Last name',
               ),
             ],
-          ),
+            const SizedBox(height: 24),
+            _isLoading
+                ? const CircularProgressIndicator()
+                : MySpecialButton(isLogin ? 'Log in' : 'Register', _handleAuth),
+            const SizedBox(height: 16),
+            TextButton(
+              onPressed: () =>
+                  setState(() => _screenMode = isLogin ? false : true),
+              child: Text(
+                isLogin
+                    ? "Don't have an account? Register"
+                    : 'Already have an account? Log in',
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -184,9 +196,10 @@ class _AuthViewState extends State<AuthView> {
               children: [
                 Expanded(
                   flex: 3,
-                  child: _GradientButton(
+                  child: MySpecialButton(
                     'Create Account',
                     () => setState(() => _screenMode = false),
+                    gradient: true,
                   ),
                 ),
                 const SizedBox(width: 12),
