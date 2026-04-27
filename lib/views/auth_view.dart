@@ -15,9 +15,10 @@ class _AuthViewState extends State<AuthView> {
   final _passwordController = TextEditingController();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
-  bool _isLogin = true;
-  bool _isLoading = false;
   final supabase = Supabase.instance.client;
+
+  bool? _screenMode;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -32,7 +33,7 @@ class _AuthViewState extends State<AuthView> {
     setState(() => _isLoading = true);
 
     try {
-      if (_isLogin) {
+      if (_screenMode == true) {
         await supabase.auth.signInWithPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text,
