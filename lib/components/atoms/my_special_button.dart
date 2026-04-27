@@ -24,18 +24,14 @@ class MySpecialButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(999),
-          gradient: const LinearGradient(
-            colors: [Color(0xFF50662B), Color(0xFFD2ECA2)],
+          gradient: LinearGradient(
+            colors: [
+              Theme.of(context).colorScheme.primary,
+              Theme.of(context).colorScheme.secondary,
+            ],
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
           ),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFF50662B).withValues(alpha: 0.25),
-              blurRadius: 16,
-              offset: const Offset(0, 6),
-            ),
-          ],
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -43,14 +39,10 @@ class MySpecialButton extends StatelessWidget {
           children: [
             Text(
               label,
-              style: const TextStyle(
-                fontWeight: FontWeight.w700,
-                color: Color(0xFF2F342E),
-                fontSize: 14,
-              ),
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
             ),
             const SizedBox(width: 6),
-            const Icon(Icons.arrow_forward, color: Color(0xFF2F342E), size: 16),
+            const Icon(Icons.arrow_forward, size: 16),
           ],
         ),
       ),

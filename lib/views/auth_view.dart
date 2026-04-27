@@ -158,9 +158,7 @@ class _AuthViewState extends State<AuthView> {
                 ),
               ),
             ),
-
             const SizedBox(height: 36),
-
             RichText(
               text: const TextSpan(
                 style: TextStyle(
@@ -194,7 +192,7 @@ class _AuthViewState extends State<AuthView> {
             const SizedBox(height: 28),
             Row(
               children: [
-                Expanded(
+                Flexible(
                   flex: 3,
                   child: MySpecialButton(
                     'Create Account',
@@ -203,7 +201,7 @@ class _AuthViewState extends State<AuthView> {
                   ),
                 ),
                 const SizedBox(width: 12),
-                Expanded(
+                Flexible(
                   flex: 2,
                   child: MySpecialButton(
                     'Log In',
@@ -212,7 +210,6 @@ class _AuthViewState extends State<AuthView> {
                 ),
               ],
             ),
-
             const SizedBox(height: 32),
           ],
         ),
