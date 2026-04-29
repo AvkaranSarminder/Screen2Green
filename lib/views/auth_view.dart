@@ -192,20 +192,22 @@ class _AuthViewState extends State<AuthView> {
             const SizedBox(height: 28),
             Row(
               children: [
-                Flexible(
-                  flex: 3,
-                  child: MySpecialButton(
-                    'Create Account',
-                    () => setState(() => _screenMode = false),
-                    gradient: true,
+                Expanded(
+                  child: Center(
+                    child: MySpecialButton(
+                      'Create Account',
+                      () => setState(() => _screenMode = true),
+                    ),
                   ),
                 ),
-                const SizedBox(width: 12),
-                Flexible(
-                  flex: 2,
-                  child: MySpecialButton(
-                    'Log In',
-                    () => setState(() => _screenMode = true),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Center(
+                    child: MySpecialButton(
+                      'Log In',
+                      () => setState(() => _screenMode = false),
+                      gradient: true,
+                    ),
                   ),
                 ),
               ],
