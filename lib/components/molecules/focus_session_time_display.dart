@@ -50,7 +50,7 @@ class FocusSessionTimeDisplay extends StatelessWidget {
           CustomPaint(
             size: const Size(280, 280),
             painter: RingPainter(
-              progress: progress,
+              progress: -progress,
               trackColor: colorScheme.surfaceContainerHighest,
               progressColor: colorScheme.primary,
             ),
