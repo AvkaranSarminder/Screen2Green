@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'package:screen2green/components/atoms/my_special_button.dart';
 import 'package:screen2green/components/molecules/focus_session_controls.dart';
 import 'package:screen2green/components/molecules/focus_session_time_display.dart';
 
@@ -143,14 +144,16 @@ class _FocusViewState extends State<FocusView>
             const SizedBox(height: 40),
             SizedBox(
               width: double.infinity,
-              child: FilledButton.icon(
-                onPressed: _startSession,
-                icon: const Icon(Icons.play_arrow_rounded),
-                label: const Text('Start Session'),
-                style: FilledButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  textStyle: textTheme.titleLarge?.copyWith(fontSize: 18),
-                  shape: const StadiumBorder(),
+              child: Center(
+                child: MySpecialButton(
+                  'Start Session',
+                  _startSession,
+                  icon: const Icon(
+                    Icons.play_arrow_rounded,
+                    size: 20,
+                    color: Colors.white,
+                  ),
+                  gradient: true,
                 ),
               ),
             ),
