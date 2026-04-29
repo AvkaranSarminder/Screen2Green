@@ -196,7 +196,7 @@ class _AuthViewState extends State<AuthView> {
                   child: Center(
                     child: MySpecialButton(
                       'Create Account',
-                      () => setState(() => _screenMode = true),
+                      () => setState(() => _screenMode = false),
                     ),
                   ),
                 ),
@@ -205,7 +205,7 @@ class _AuthViewState extends State<AuthView> {
                   child: Center(
                     child: MySpecialButton(
                       'Log In',
-                      () => setState(() => _screenMode = false),
+                      () => setState(() => _screenMode = true),
                       gradient: true,
                     ),
                   ),
