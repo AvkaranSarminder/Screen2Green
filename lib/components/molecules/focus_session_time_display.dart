@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:screen2green/helpers/painters.dart';
 
 class FocusSessionTimeDisplay extends StatelessWidget {
   const FocusSessionTimeDisplay({
@@ -46,6 +47,15 @@ class FocusSessionTimeDisplay extends StatelessWidget {
               ],
             ),
           ),
+          CustomPaint(
+            size: const Size(280, 280),
+            painter: RingPainter(
+              progress: progress,
+              trackColor: colorScheme.surfaceContainerHighest,
+              progressColor: colorScheme.primary,
+            ),
+          ),
+
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -59,9 +69,9 @@ class FocusSessionTimeDisplay extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                isActive ? 'MINUTES LEFT' : 'DEEP FOCUS',
+                isActive ? 'MINUTES LEFT' : 'MINUTES',
                 style: textTheme.bodyMedium?.copyWith(
-                  color: colorScheme.primary.withValues(alpha: 0.7),
+                  color: colorScheme.onSurface.withValues(alpha: 0.7),
                   fontSize: 12,
                   letterSpacing: 2,
                 ),
