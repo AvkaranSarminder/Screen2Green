@@ -169,9 +169,9 @@ class _AuthViewState extends State<AuthView> {
                   letterSpacing: -1,
                 ),
                 children: [
-                  TextSpan(text: 'Grow Your '),
+                  TextSpan(text: 'Grow With '),
                   TextSpan(
-                    text: 'Focus',
+                    text: 'Me',
                     style: TextStyle(
                       color: Color(0xFF50662B),
                       fontStyle: FontStyle.italic,
