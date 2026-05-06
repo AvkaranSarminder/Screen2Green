@@ -29,45 +29,47 @@ class _MyPlantViewState extends State<MyPlantView> {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const SizedBox(height: 60),
-        Icon(Icons.qr_code_scanner, size: 100, color: colorScheme.secondary),
-        const SizedBox(height: 24),
-        const Text(
-          "Connect to your Plant",
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 12),
-        const Text(
-          "Scan the QR code on your plant pot to begin.",
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.black54),
-        ),
-        const SizedBox(height: 40),
-        ElevatedButton(
-          onPressed: () => setState(() => userHasPlant = true),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: colorScheme.secondary,
-            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(height: 60),
+          Icon(Icons.qr_code_scanner, size: 100, color: colorScheme.secondary),
+          const SizedBox(height: 24),
+          const Text(
+            "Connect to your Plant",
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 12),
+          const Text(
+            "Scan the QR code on your plant pot to begin.",
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.black54),
+          ),
+          const SizedBox(height: 40),
+          ElevatedButton(
+            onPressed: () => setState(() => userHasPlant = true),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: colorScheme.secondary,
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+            ),
+            child: const Text(
+              "Scan QR Code",
+              style: TextStyle(color: Colors.white),
             ),
           ),
-          child: const Text(
-            "Scan QR Code",
-            style: TextStyle(color: Colors.white),
+          TextButton(
+            onPressed: () => _showManualEntryDialog(),
+            child: Text(
+              "Or enter code manually",
+              style: TextStyle(color: colorScheme.secondary),
+            ),
           ),
-        ),
-        TextButton(
-          onPressed: () => _showManualEntryDialog(),
-          child: Text(
-            "Or enter code manually",
-            style: TextStyle(color: colorScheme.secondary),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -75,40 +77,42 @@ class _MyPlantViewState extends State<MyPlantView> {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "CURRENT STATUS",
-          style: TextStyle(
-            letterSpacing: 2,
-            fontSize: 10,
-            fontWeight: FontWeight.bold,
-            color: colorScheme.secondary,
-          ),
-        ),
-        Text(
-          "Your Basil's Health",
-          style: TextStyle(fontSize: 32, fontWeight: FontWeight.w800),
-        ),
-        const SizedBox(height: 24),
-        Container(
-          height: 300,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: colorScheme.surface,
-            borderRadius: BorderRadius.circular(32),
-          ),
-          child: Center(
-            child: Image.asset(
-              'assets/images/dummy_plant.png',
-              fit: BoxFit.contain,
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "CURRENT STATUS",
+            style: TextStyle(
+              letterSpacing: 2,
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
+              color: colorScheme.secondary,
             ),
           ),
-        ),
-        const SizedBox(height: 24),
-        const PlantDataDisplay(),
-      ],
+          Text(
+            "Your Basil's Health",
+            style: TextStyle(fontSize: 32, fontWeight: FontWeight.w800),
+          ),
+          const SizedBox(height: 24),
+          Container(
+            height: 300,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: colorScheme.surface,
+              borderRadius: BorderRadius.circular(32),
+            ),
+            child: Center(
+              child: Image.asset(
+                'assets/images/dummy_plant.png',
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+          const SizedBox(height: 24),
+          const PlantDataDisplay(),
+        ],
+      ),
     );
   }
 
