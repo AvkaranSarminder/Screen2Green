@@ -45,8 +45,11 @@ class PlantDataElement extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             label.toUpperCase(),
-            style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w800),
-            selectionColor: colorScheme.primary,
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w800,
+              color: colorScheme.primary,
+            ),
           ),
         ],
       ),
