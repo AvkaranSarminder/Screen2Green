@@ -45,14 +45,14 @@ class _MainScreenState extends State<MainView> {
           setState(() => _selectedIndex = index);
         },
         children: [
-          const GardenView(),
           const MyPlantView(),
+          const JourneyView(),
           FocusView(
             onSessionStateChanged: (isRunning) {
               setState(() => _focusSessionActive = isRunning);
             },
           ),
-          const JourneyView(),
+          const GardenView(),
           const ProfileView(),
         ],
       ),
