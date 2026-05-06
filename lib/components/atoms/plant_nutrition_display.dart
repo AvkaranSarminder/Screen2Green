@@ -11,7 +11,6 @@ class PlantNutritionDisplay extends StatelessWidget {
         borderRadius: BorderRadius.circular(32),
       ),
       height: 160,
-      width: 300,
     );
   }
 }

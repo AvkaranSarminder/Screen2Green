@@ -89,7 +89,7 @@ class _MainScreenState extends State<MainView> {
                   label: 'FOCUS',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.filter_vintage),
+                  icon: Icon(Icons.forest),
                   label: 'GARDEN',
                 ),
                 BottomNavigationBarItem(
