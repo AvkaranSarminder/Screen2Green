@@ -10,7 +10,7 @@ class PlantDataElement extends StatelessWidget {
     super.key,
     required this.icon,
     required this.label,
-    required this.percentage,
+    this.percentage = 0,
   });
 
   @override
