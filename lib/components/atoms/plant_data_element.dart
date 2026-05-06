@@ -18,34 +18,38 @@ class PlantDataElement extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    return Row(
-      children: [
-        Icon(icon, color: colorScheme.primary, size: 20),
-        const SizedBox(width: 8),
-        Text(
-          label,
-          style: textTheme.bodyMedium?.copyWith(color: colorScheme.onSurface),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: LinearPercentIndicator(
-            animation: true,
-            animationDuration: 600,
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: const Color(0xFFEDF0E8),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          LinearPercentIndicator(
             lineHeight: 8.0,
             percent: percentage,
-            backgroundColor: colorScheme.surfaceContainerHigh,
-            progressColor: Theme.of(context).primaryColor,
-            barRadius: const Radius.circular(4),
-            padding: EdgeInsets.zero,
-            linearGradient: LinearGradient(
-              colors: [
-                Theme.of(context).primaryColor,
-                Theme.of(context).primaryColor.withValues(alpha: 0.6),
-              ],
+            animation: true,
+            animationDuration: 1000,
+            leading: Icon(icon, color: colorScheme.primary),
+            trailing: Text(
+              label,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
+            progressColor: colorScheme.primary,
+            backgroundColor: Colors.white,
+            barRadius: const Radius.circular(10),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
           ),
-        ),
-      ],
+          const SizedBox(height: 8),
+          Text(
+            label.toUpperCase(),
+            style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w800),
+            selectionColor: colorScheme.primary,
+          ),
+        ],
+      ),
     );
   }
 }
