@@ -77,20 +77,20 @@ class _MainScreenState extends State<MainView> {
               unselectedIconTheme: const IconThemeData(size: 24),
               items: const [
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.filter_vintage),
-                  label: 'GARDEN',
-                ),
-                BottomNavigationBarItem(
                   icon: Icon(Icons.eco),
                   label: 'MY PLANT',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.map),
+                  label: 'JOURNEY',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.timer),
                   label: 'FOCUS',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.map),
-                  label: 'JOURNEY',
+                  icon: Icon(Icons.filter_vintage),
+                  label: 'GARDEN',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.person),
