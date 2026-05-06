@@ -16,12 +16,9 @@ class _MyPlantViewState extends State<MyPlantView> {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    return Scaffold(
-      backgroundColor: colorScheme.surface,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-        child: userHasPlant ? _buildPlantDashboard() : _buildScanner(),
-      ),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(24),
+      child: userHasPlant ? _buildPlantDashboard() : _buildScanner(),
     );
   }
 

@@ -5,6 +5,9 @@ class GardenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(24),
+      child: Center(child: Container()),
+    );
   }
 }

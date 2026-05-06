@@ -8,16 +8,19 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     final supabase = Supabase.instance.client;
 
-    return Center(
-      child: OutlinedButton(
-        onPressed: () async {
-          await supabase.auth.signOut();
-        },
-        style: OutlinedButton.styleFrom(
-          foregroundColor: Colors.red,
-          backgroundColor: const Color.fromARGB(0, 239, 159, 159),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(24),
+      child: Center(
+        child: OutlinedButton(
+          onPressed: () async {
+            await supabase.auth.signOut();
+          },
+          style: OutlinedButton.styleFrom(
+            foregroundColor: Colors.red,
+            backgroundColor: const Color.fromARGB(0, 239, 159, 159),
+          ),
+          child: const Text('Log out'),
         ),
-        child: const Text('Log out'),
       ),
     );
   }
