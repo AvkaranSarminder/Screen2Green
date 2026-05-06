@@ -56,7 +56,10 @@ final ThemeData myAppTheme = ThemeData(
       fontFamily: 'LeagueSpartan',
       fontWeight: FontWeight.bold,
     ),
-    titleLarge: TextStyle(fontFamily: 'LeagueSpartan'),
+    titleLarge: TextStyle(
+      fontFamily: 'LeagueSpartan',
+      fontWeight: FontWeight.w700,
+    ),
     bodyLarge: TextStyle(fontFamily: 'LeagueSpartan'),
     bodyMedium: TextStyle(fontFamily: 'LeagueSpartan'),
   ),
