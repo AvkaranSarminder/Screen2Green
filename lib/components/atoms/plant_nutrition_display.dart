@@ -32,7 +32,7 @@ class PlantNutritionDisplay extends StatelessWidget {
               Text('Last fed 5 days ago'),
             ],
           ),
-          Text('Nutrition'),
+          Text('HEALTHY'),
         ],
       ),
     );

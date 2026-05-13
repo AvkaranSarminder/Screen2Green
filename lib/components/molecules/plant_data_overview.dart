@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:screen2green/components/atoms/plant_data_element.dart';
+import 'package:screen2green/components/atoms/plant_nutrition_display.dart';
 
 class PlantDataDisplay extends StatelessWidget {
   const PlantDataDisplay({super.key});
@@ -29,7 +30,7 @@ class PlantDataDisplay extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 16),
-        const PlantDataElement(label: "Nutrient Status", icon: Icons.eco),
+        const PlantNutritionDisplay(),
         const SizedBox(height: 16),
         // Harvest Estimate (Horizontal style)
         const PlantDataElement(

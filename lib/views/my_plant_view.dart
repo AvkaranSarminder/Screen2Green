@@ -79,17 +79,11 @@ class _MyPlantViewState extends State<MyPlantView> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            "CURRENT STATUS",
-            style: TextStyle(
-              letterSpacing: 2,
-              fontSize: 10,
-              fontWeight: FontWeight.bold,
-              color: colorScheme.secondary,
+            'Your Basil',
+            style: textTheme.displayLarge?.copyWith(
+              color: colorScheme.onSurface,
+              fontSize: 32,
             ),
-          ),
-          Text(
-            "Your Basil's Health",
-            style: TextStyle(fontSize: 32, fontWeight: FontWeight.w800),
           ),
           const SizedBox(height: 24),
           Container(
