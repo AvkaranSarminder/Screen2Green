@@ -9,25 +9,16 @@ class PlantDataDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        GridView.count(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          crossAxisCount: 2,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-          childAspectRatio: 1.1,
-          children: const [
-            PlantDataElement(
-              icon: Icons.water_drop_outlined,
-              label: "Water Level",
-              percentage: 0.5,
-            ),
-            PlantDataElement(
-              icon: Icons.wb_sunny_outlined,
-              label: "Light Intensity",
-              percentage: 0.6,
-            ),
-          ],
+        const PlantDataElement(
+          icon: Icons.water_drop_outlined,
+          label: "Water Level",
+          percentage: 0.5,
+        ),
+        const SizedBox(height: 16),
+        const PlantDataElement(
+          icon: Icons.dew_point,
+          label: "Soil Moisture Level",
+          percentage: 0.5,
         ),
         const SizedBox(height: 16),
         const PlantNutritionDisplay(),
@@ -36,6 +27,7 @@ class PlantDataDisplay extends StatelessWidget {
         const PlantDataElement(
           label: "Estimated Harvest",
           icon: Icons.calendar_today,
+          percentage: 0.9,
         ),
       ],
     );
