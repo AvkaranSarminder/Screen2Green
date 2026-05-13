@@ -111,6 +111,7 @@ class _JourneyViewState extends State<JourneyView> {
                 color: colorScheme.onSurface,
                 fontSize: 32,
               ),
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 6),
             Text(
@@ -118,14 +119,13 @@ class _JourneyViewState extends State<JourneyView> {
               style: textTheme.bodyMedium?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 40),
 
-            // ── Total time card ──
             _buildTotalTime(colorScheme, textTheme),
             const SizedBox(height: 32),
 
-            // ── Session list ──
             Text(
               'Recent sessions',
               style: textTheme.titleSmall?.copyWith(
