@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:screen2green/components/atoms/my_special_button.dart';
 import 'package:screen2green/components/molecules/focus_session_controls.dart';
 import 'package:screen2green/components/molecules/focus_session_time_display.dart';
+import 'package:screen2green/helpers/session_storage.dart';
 
 class FocusView extends StatefulWidget {
   const FocusView({super.key, required this.onSessionStateChanged});
@@ -21,6 +22,7 @@ class _FocusViewState extends State<FocusView>
   late int _remainingSeconds = 1500;
   bool _isActive = false;
   Timer? _timer;
+  DateTime? _sessionStartTime;
   late AnimationController _controller;
   late Animation<double> _animation;
   final String _generatedQuote =
@@ -30,6 +32,7 @@ class _FocusViewState extends State<FocusView>
     setState(() {
       _isActive = true;
       _remainingSeconds = _durationInMinutes * 60;
+      _sessionStartTime = DateTime.now();
     });
     widget.onSessionStateChanged(true);
     _controller.forward();
@@ -43,8 +46,20 @@ class _FocusViewState extends State<FocusView>
     });
   }
 
-  void _endSession() {
+  void _endSession() async {
     _timer?.cancel();
+
+    if (_sessionStartTime != null) {
+      final elapsed = DateTime.now().difference(_sessionStartTime!).inSeconds;
+      //change after presentation
+      if (elapsed >= 3) {
+        await SessionStorage.save(
+          FocusSession(date: DateTime.now(), durationSeconds: elapsed),
+        );
+      }
+      _sessionStartTime = null;
+    }
+
     setState(() => _isActive = false);
     widget.onSessionStateChanged(false);
     _controller.reverse();
