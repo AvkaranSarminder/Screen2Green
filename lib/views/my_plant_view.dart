@@ -13,9 +13,6 @@ class _MyPlantViewState extends State<MyPlantView> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-
     return SingleChildScrollView(
       padding: const EdgeInsets.all(24),
       child: userHasPlant ? _buildPlantDashboard() : _buildScanner(),
@@ -24,7 +21,6 @@ class _MyPlantViewState extends State<MyPlantView> {
 
   Widget _buildScanner() {
     final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
 
     return Center(
       child: Column(
