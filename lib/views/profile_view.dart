@@ -8,12 +8,22 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final supabase = Supabase.instance.client;
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Center(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset('assets/images/male_pfp.png'),
+          Text(
+            'Profile',
+            style: textTheme.displayLarge?.copyWith(
+              color: colorScheme.onSurface,
+              fontSize: 32,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          Image.asset('assets/images/male_pfp.png', width: 200),
           MySpecialButton(
             'Log out',
             () async {
