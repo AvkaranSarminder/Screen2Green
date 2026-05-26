@@ -28,7 +28,7 @@ class _FocusViewState extends State<FocusView>
   final String _generatedQuote =
       "Like your basil, you are growing in silence and strength.";
 
-  void _startSession() {
+  void _startSession() async {
     setState(() {
       _isActive = true;
       _remainingSeconds = _durationInMinutes * 60;
@@ -48,7 +48,6 @@ class _FocusViewState extends State<FocusView>
 
   void _endSession() async {
     _timer?.cancel();
-
     if (_sessionStartTime != null) {
       final elapsed = DateTime.now().difference(_sessionStartTime!).inSeconds;
       //change after presentation
