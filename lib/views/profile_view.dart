@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:screen2green/components/atoms/my_special_button.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfileView extends StatelessWidget {
@@ -11,15 +12,13 @@ class ProfileView extends StatelessWidget {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(24),
       child: Center(
-        child: OutlinedButton(
-          onPressed: () async {
+        child: MySpecialButton(
+          'Log out',
+          () async {
             await supabase.auth.signOut();
           },
-          style: OutlinedButton.styleFrom(
-            foregroundColor: Colors.red,
-            backgroundColor: const Color.fromARGB(0, 239, 159, 159),
-          ),
-          child: const Text('Log out'),
+          danger: true,
+          icon: const Icon(Icons.logout_rounded, color: Colors.white),
         ),
       ),
     );
