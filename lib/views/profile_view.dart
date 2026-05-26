@@ -13,6 +13,7 @@ class ProfileView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Image.asset('assets/images/male_pfp.png'),
           MySpecialButton(
             'Log out',
             () async {
