@@ -25,6 +25,8 @@ flutter:
     - assets/images/tempor-removebg-preview.png
     - assets/images/auth_plant.png
     - assets/images/dummy_plant.png
+    - assets/images/male_pfp.png
+    - assets/images/femmale_pfp.png
   fonts:
     - family: LeagueSpartan
       fonts:
