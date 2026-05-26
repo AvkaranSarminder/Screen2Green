@@ -7,6 +7,7 @@ class MySpecialButton extends StatelessWidget {
     super.key,
     this.gradient = false,
     this.icon,
+    this.danger = false,
   });
 
   final String label;
