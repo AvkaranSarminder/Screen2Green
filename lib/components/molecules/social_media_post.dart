@@ -67,7 +67,6 @@ class SocialMediaPost extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Description
                 Text(
                   description,
                   style: textTheme.bodyMedium?.copyWith(
