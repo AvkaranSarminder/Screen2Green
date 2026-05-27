@@ -42,6 +42,10 @@ class _AuthViewState extends State<AuthView> {
         final response = await supabase.auth.signUp(
           email: _emailController.text.trim(),
           password: _passwordController.text,
+          data: {
+            'first_name': _firstNameController.text.trim(),
+            'last_name': _lastNameController.text.trim(),
+          },
         );
 
         final userId = response.user?.id;

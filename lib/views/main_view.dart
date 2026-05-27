@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'garden_view.dart';
 import 'my_plant_view.dart';
 import 'focus_view.dart';
@@ -17,6 +18,17 @@ class _MainScreenState extends State<MainView> {
   final PageController _pageController = PageController();
   bool _focusSessionActive = false;
 
+  String _firstName = 'N/A';
+  String _lastName = 'N/A';
+  String _email = 'N/A';
+  bool _isLoadingProfile = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchProfile();
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -26,6 +38,50 @@ class _MainScreenState extends State<MainView> {
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
+  }
+
+  Future<void> _fetchProfile() async {
+    final supabase = Supabase.instance.client;
+    final user = supabase.auth.currentUser;
+    if (user != null) {
+      final metaFirstName = user.userMetadata?['first_name'] as String?;
+      final metaLastName = user.userMetadata?['last_name'] as String?;
+
+      if (mounted) {
+        setState(() {
+          _email = user.email ?? 'N/A';
+          if (metaFirstName != null) _firstName = metaFirstName;
+          if (metaLastName != null) _lastName = metaLastName;
+          if (metaFirstName != null && metaLastName != null) {
+            _isLoadingProfile = false;
+          }
+        });
+      }
+
+      try {
+        final data = await supabase
+            .from('users')
+            .select()
+            .eq('id', user.id)
+            .maybeSingle();
+
+        if (data != null && mounted) {
+          setState(() {
+            _firstName = data['first_name'] as String? ?? _firstName;
+            _lastName = data['last_name'] as String? ?? _lastName;
+            _isLoadingProfile = false;
+          });
+        }
+      } catch (e) {
+        debugPrint('Error fetching user profile: $e');
+      }
+    }
+
+    if (mounted) {
+      setState(() {
+        _isLoadingProfile = false;
+      });
+    }
   }
 
   @override
@@ -53,7 +109,12 @@ class _MainScreenState extends State<MainView> {
             },
           ),
           const GardenView(),
-          const ProfileView(),
+          ProfileView(
+            firstName: _firstName,
+            lastName: _lastName,
+            email: _email,
+            isLoading: _isLoadingProfile,
+          ),
         ],
       ),
       bottomNavigationBar: _focusSessionActive
