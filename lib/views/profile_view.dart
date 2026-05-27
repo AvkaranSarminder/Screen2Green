@@ -11,28 +11,33 @@ class ProfileView extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    return Center(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            'Profile',
-            style: textTheme.displayLarge?.copyWith(
-              color: colorScheme.onSurface,
-              fontSize: 32,
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              'Profile',
+              style: textTheme.displayLarge?.copyWith(
+                color: colorScheme.onSurface,
+                fontSize: 32,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
-          Image.asset('assets/images/male_pfp.png', width: 200),
-          MySpecialButton(
-            'Log out',
-            () async {
-              await supabase.auth.signOut();
-            },
-            danger: true,
-            icon: const Icon(Icons.logout_rounded, color: Colors.white),
-          ),
-        ],
+            const SizedBox(height: 6),
+            Image.asset('assets/images/male_pfp.png', width: 200),
+            const SizedBox(height: 6),
+            MySpecialButton(
+              'Log out',
+              () async {
+                await supabase.auth.signOut();
+              },
+              danger: true,
+              icon: const Icon(Icons.logout_rounded, color: Colors.white),
+            ),
+          ],
+        ),
       ),
     );
   }
