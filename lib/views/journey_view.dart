@@ -52,15 +52,15 @@ class _JourneyViewState extends State<JourneyView> {
   String _fmtTotal(int secs) {
     final h = secs ~/ 3600;
     final m = (secs % 3600) ~/ 60;
-    if (h > 0) return '${h}h ${m}m';
-    return '${m}m';
+    if (h > 0) return '${h}h $m min';
+    return '$m min';
   }
 
   String _fmtDuration(int secs) {
     final h = secs ~/ 3600;
     final m = (secs % 3600) ~/ 60;
-    if (h > 0) return '${h}h ${m}m';
-    return '${m}m';
+    if (h > 0) return '$h h $m min';
+    return '$m min';
   }
 
   String _fmtDate(DateTime d) {
