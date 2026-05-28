@@ -29,8 +29,6 @@ class _JourneyViewState extends State<JourneyView> {
     }
   }
 
-  // ── Computed stats ──────────────────────────────────────────────
-
   int get _totalSeconds =>
       _sessions.fold(0, (sum, s) => sum + s.durationSeconds);
 
@@ -46,8 +44,6 @@ class _JourneyViewState extends State<JourneyView> {
 
   String _dateKey(DateTime d) =>
       '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
-
-  // ── Formatters ──────────────────────────────────────────────────
 
   String _fmtTotal(int secs) {
     final h = secs ~/ 3600;
