@@ -82,8 +82,6 @@ class _JourneyViewState extends State<JourneyView> {
     return '${weekdays[d.weekday - 1]}, ${d.day} ${months[d.month - 1]}';
   }
 
-  // ── Build ───────────────────────────────────────────────────────
-
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
