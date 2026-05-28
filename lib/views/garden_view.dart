@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:screen2green/components/molecules/social_media_post.dart';
 
@@ -132,16 +134,10 @@ class _GardenViewState extends State<GardenView> {
                       );
                     }
 
-                    return GridView.builder(
+                    return ListView.separated(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 16,
-                            mainAxisSpacing: 16,
-                            childAspectRatio: 0.75,
-                          ),
+                      separatorBuilder: (_, __) => const SizedBox(height: 16),
                       itemCount: posts.length,
                       itemBuilder: (context, index) {
                         final post = posts[index] as Map<String, dynamic>;
@@ -197,16 +193,9 @@ class _CreatePostModal extends StatefulWidget {
 
 class _CreatePostModalState extends State<_CreatePostModal> {
   final _descriptionController = TextEditingController();
-  String? _imageUrl;
+  final _imagePicker = ImagePicker();
+  File? _imageFile;
   bool _isSubmitting = false;
-
-  final List<String> _mockImages = [
-    'https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=600&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=600&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1592150621744-aca64f48394a?w=600&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1530968464165-7a1861cbaf9f?w=600&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&auto=format&fit=crop',
-  ];
 
   @override
   void initState() {
@@ -224,16 +213,27 @@ class _CreatePostModalState extends State<_CreatePostModal> {
     setState(() {});
   }
 
-  void _takePicture() {
-    final randomImage = (_mockImages..shuffle()).first;
+  Future<void> _takePicture() async {
+    final picked = await _imagePicker.pickImage(
+      source: ImageSource.camera,
+      imageQuality: 80,
+    );
+    if (picked != null) {
+      setState(() {
+        _imageFile = File(picked.path);
+      });
+    }
+  }
+
+  void _removeImage() {
     setState(() {
-      _imageUrl = randomImage;
+      _imageFile = null;
     });
   }
 
   bool get _canSubmit {
     final hasDescription = _descriptionController.text.trim().isNotEmpty;
-    final hasImage = _imageUrl != null && _imageUrl!.isNotEmpty;
+    final hasImage = _imageFile != null;
     return (hasDescription || hasImage) && !_isSubmitting;
   }
 
@@ -253,9 +253,22 @@ class _CreatePostModalState extends State<_CreatePostModal> {
     }
 
     try {
+      String? thumbnailUrl;
+
+      if (_imageFile != null) {
+        final fileName =
+            '${user.id}_${DateTime.now().millisecondsSinceEpoch}.jpg';
+        await supabase.storage
+            .from('social media post thumbnails')
+            .upload(fileName, _imageFile!);
+        thumbnailUrl = supabase.storage
+            .from('social media post thumbnails')
+            .getPublicUrl(fileName);
+      }
+
       await supabase.from('social_media_posts').insert({
         'description': _descriptionController.text.trim(),
-        'thumbnail': _imageUrl,
+        'thumbnail': thumbnailUrl,
         'author_id': user.id,
         'created_at': DateTime.now().toIso8601String(),
       });
@@ -317,14 +330,14 @@ class _CreatePostModalState extends State<_CreatePostModal> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
-              if (_imageUrl != null) ...[
+              if (_imageFile != null) ...[
                 Stack(
                   children: [
                     AspectRatio(
                       aspectRatio: 16 / 9,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(16),
-                        child: Image.network(_imageUrl!, fit: BoxFit.cover),
+                        child: Image.file(_imageFile!, fit: BoxFit.cover),
                       ),
                     ),
                     Positioned(
@@ -334,7 +347,7 @@ class _CreatePostModalState extends State<_CreatePostModal> {
                         backgroundColor: Colors.black.withValues(alpha: 0.5),
                         child: IconButton(
                           icon: const Icon(Icons.close, color: Colors.white),
-                          onPressed: () => setState(() => _imageUrl = null),
+                          onPressed: _removeImage,
                         ),
                       ),
                     ),
@@ -354,7 +367,7 @@ class _CreatePostModalState extends State<_CreatePostModal> {
                 ),
                 icon: const Icon(Icons.camera_alt_outlined),
                 label: Text(
-                  _imageUrl == null ? 'Take a Picture' : 'Retake Picture',
+                  _imageFile == null ? 'Take a Picture' : 'Retake Picture',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
