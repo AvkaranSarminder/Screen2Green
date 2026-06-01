@@ -42,6 +42,10 @@ class _AuthViewState extends State<AuthView> {
         final response = await supabase.auth.signUp(
           email: _emailController.text.trim(),
           password: _passwordController.text,
+          data: {
+            'first_name': _firstNameController.text.trim(),
+            'last_name': _lastNameController.text.trim(),
+          },
         );
 
         final userId = response.user?.id;
@@ -101,15 +105,7 @@ class _AuthViewState extends State<AuthView> {
               style: Theme.of(context).textTheme.displayLarge,
             ),
             const SizedBox(height: 32),
-            SingleTextField(controller: _emailController, label: 'Email'),
-            const SizedBox(height: 16),
-            SingleTextField(
-              controller: _passwordController,
-              label: 'Password',
-              obscureText: true,
-            ),
             if (!isLogin) ...[
-              const SizedBox(height: 16),
               SingleTextField(
                 controller: _firstNameController,
                 label: 'First name',
@@ -119,7 +115,15 @@ class _AuthViewState extends State<AuthView> {
                 controller: _lastNameController,
                 label: 'Last name',
               ),
+              const SizedBox(height: 16),
             ],
+            SingleTextField(controller: _emailController, label: 'Email'),
+            const SizedBox(height: 16),
+            SingleTextField(
+              controller: _passwordController,
+              label: 'Password',
+              obscureText: true,
+            ),
             const SizedBox(height: 24),
             _isLoading
                 ? const CircularProgressIndicator()

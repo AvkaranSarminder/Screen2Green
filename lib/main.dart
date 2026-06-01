@@ -50,13 +50,17 @@ final ThemeData myAppTheme = ThemeData(
     secondary: const Color(0xFF637f30),
     tertiary: const Color(0xFF5f4228),
     surface: const Color(0xFFd9d8dd),
+    error: const Color.fromARGB(255, 228, 17, 17),
   ),
   textTheme: const TextTheme(
     displayLarge: TextStyle(
       fontFamily: 'LeagueSpartan',
       fontWeight: FontWeight.bold,
     ),
-    titleLarge: TextStyle(fontFamily: 'LeagueSpartan'),
+    titleLarge: TextStyle(
+      fontFamily: 'LeagueSpartan',
+      fontWeight: FontWeight.w700,
+    ),
     bodyLarge: TextStyle(fontFamily: 'LeagueSpartan'),
     bodyMedium: TextStyle(fontFamily: 'LeagueSpartan'),
   ),

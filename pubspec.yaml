@@ -9,7 +9,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  percent_indicator: ^4.2.5
   supabase_flutter: ^2.0.0
+  shared_preferences: ^2.2.3
+  do_not_disturb: ^1.0.3
+  image_picker: ^1.2.2
 
 dev_dependencies:
   flutter_test:
@@ -21,6 +25,9 @@ flutter:
   assets:
     - assets/images/tempor-removebg-preview.png
     - assets/images/auth_plant.png
+    - assets/images/dummy_plant.png
+    - assets/images/female_pfp.png
+    - assets/images/male_pfp.png
   fonts:
     - family: LeagueSpartan
       fonts:
