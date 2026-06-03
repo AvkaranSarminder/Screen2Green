@@ -10,6 +10,8 @@ class MyPlantView extends StatefulWidget {
 
 class _MyPlantViewState extends State<MyPlantView> {
   bool userHasPlant = false;
+  final String deviceId = 'some-random-id-for-testing';
+  late final Stream<Map<String, dynamic>> dataStream;
 
   @override
   Widget build(BuildContext context) {
