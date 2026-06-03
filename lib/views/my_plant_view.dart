@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:screen2green/components/molecules/plant_data_overview.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class MyPlantView extends StatefulWidget {
   const MyPlantView({super.key});
@@ -12,6 +13,17 @@ class _MyPlantViewState extends State<MyPlantView> {
   bool userHasPlant = false;
   final String deviceId = 'some-random-id-for-testing';
   late final Stream<Map<String, dynamic>> dataStream;
+
+  @override
+  void initState() {
+    super.initState();
+
+    dataStream = Supabase.instance.client
+        .from('plant_pots')
+        .stream(primaryKey: ['id'])
+        .eq('id', deviceId)
+        .map((rows) => rows.first);
+  }
 
   @override
   Widget build(BuildContext context) {
