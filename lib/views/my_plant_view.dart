@@ -11,7 +11,7 @@ class MyPlantView extends StatefulWidget {
 
 class _MyPlantViewState extends State<MyPlantView> {
   bool userHasPlant = false;
-  final String deviceId = 'some-random-id-for-testing';
+  final String deviceId = '51c957f9-6f10-4e0b-af18-449252b1abeb';
   late final Stream<Map<String, dynamic>> dataStream;
 
   @override
@@ -84,36 +84,77 @@ class _MyPlantViewState extends State<MyPlantView> {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    return Center(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            'Your Basil',
-            style: textTheme.displayLarge?.copyWith(
-              color: colorScheme.onSurface,
-              fontSize: 32,
+    return StreamBuilder<Map<String, dynamic>>(
+      stream: dataStream,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const Center(
+            child: Padding(
+              padding: EdgeInsets.all(48),
+              child: CircularProgressIndicator(),
             ),
-          ),
-          const SizedBox(height: 24),
-          Container(
-            height: 300,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: colorScheme.surface,
-              borderRadius: BorderRadius.circular(32),
-            ),
-            child: Center(
-              child: Image.asset(
-                'assets/images/dummy_plant.png',
-                fit: BoxFit.contain,
+          );
+        }
+
+        final plant = snapshot.data!;
+
+        final temperature = (plant['temperature'] as num?)?.toDouble() ?? 0;
+
+        final soilMoisture = (plant['soil_moisture'] as num?)?.toInt() ?? 0;
+
+        return Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Your Basil',
+                style: textTheme.displayLarge?.copyWith(
+                  color: colorScheme.onSurface,
+                  fontSize: 32,
+                ),
               ),
-            ),
+
+              const SizedBox(height: 24),
+
+              Container(
+                height: 300,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: colorScheme.surface,
+                  borderRadius: BorderRadius.circular(32),
+                ),
+                child: Center(
+                  child: Image.asset(
+                    'assets/images/dummy_plant.png',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 24),
+
+              Card(
+                child: ListTile(
+                  leading: const Icon(Icons.thermostat),
+                  title: const Text('Temperature'),
+                  trailing: Text('${temperature.toStringAsFixed(1)} °C'),
+                ),
+              ),
+
+              const SizedBox(height: 12),
+
+              Card(
+                child: ListTile(
+                  leading: const Icon(Icons.water_drop),
+                  title: const Text('Soil Moisture'),
+                  trailing: Text('$soilMoisture'),
+                ),
+              ),
+              const SizedBox(height: 24),
+            ],
           ),
-          const SizedBox(height: 24),
-          const PlantDataDisplay(),
-        ],
-      ),
+        );
+      },
     );
   }
 
