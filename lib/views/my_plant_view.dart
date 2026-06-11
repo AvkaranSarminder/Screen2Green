@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:screen2green/components/molecules/plant_data_overview.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class MyPlantView extends StatefulWidget {
@@ -11,18 +10,50 @@ class MyPlantView extends StatefulWidget {
 
 class _MyPlantViewState extends State<MyPlantView> {
   bool userHasPlant = false;
-  final String deviceId = '51c957f9-6f10-4e0b-af18-449252b1abeb';
-  late final Stream<Map<String, dynamic>> dataStream;
+
+  late Future<dynamic> plantFuture;
+  late Future<dynamic> testFuture;
 
   @override
   void initState() {
     super.initState();
+  }
 
-    dataStream = Supabase.instance.client
-        .from('plant_pots')
-        .stream(primaryKey: ['id'])
-        .eq('id', deviceId)
-        .map((rows) => rows.first);
+  void _refreshPlant() {
+    final supabase = Supabase.instance.client;
+    setState(() {
+      plantFuture = supabase
+          .from('plant_pots')
+          .select('''
+      id,
+      moisture,
+      temperature,
+      water,
+      water_pass_through,
+      relay_command
+    ''')
+          .eq('device_id', "testforEPS26")
+          .maybeSingle();
+    });
+  }
+
+  void _testFetch() async {
+    final supabase = Supabase.instance.client;
+
+    try {
+      final data = await supabase
+          .from('plant_pots')
+          .select()
+          .order('created_at', ascending: false);
+
+      debugPrint("TEST DATA: $data");
+
+      setState(() {
+        testFuture = Future.value(data);
+      });
+    } catch (e) {
+      debugPrint("ERROR TEST: $e");
+    }
   }
 
   @override
@@ -33,61 +64,13 @@ class _MyPlantViewState extends State<MyPlantView> {
     );
   }
 
-  Widget _buildScanner() {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return Center(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(height: 60),
-          Icon(Icons.qr_code_scanner, size: 100, color: colorScheme.secondary),
-          const SizedBox(height: 24),
-          const Text(
-            "Connect to your Plant",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 12),
-          const Text(
-            "Scan the QR code on your plant pot to begin.",
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.black54),
-          ),
-          const SizedBox(height: 40),
-          ElevatedButton(
-            onPressed: () => setState(() => userHasPlant = true),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: colorScheme.secondary,
-              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-            ),
-            child: const Text(
-              "Scan QR Code",
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-          TextButton(
-            onPressed: () => _showManualEntryDialog(),
-            child: Text(
-              "Or enter code manually",
-              style: TextStyle(color: colorScheme.secondary),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildPlantDashboard() {
-    final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    return StreamBuilder<Map<String, dynamic>>(
-      stream: dataStream,
+    return FutureBuilder<dynamic>(
+      future: plantFuture,
       builder: (context, snapshot) {
-        if (!snapshot.hasData) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
             child: Padding(
               padding: EdgeInsets.all(48),
@@ -96,11 +79,26 @@ class _MyPlantViewState extends State<MyPlantView> {
           );
         }
 
-        final plant = snapshot.data!;
+        if (snapshot.hasError) {
+          return Center(
+            child: Text(
+              'Error: ${snapshot.error}',
+              style: const TextStyle(color: Colors.red),
+            ),
+          );
+        }
 
-        final temperature = (plant['temperature'] as num?)?.toDouble() ?? 0;
+        final plant = snapshot.data;
 
-        final soilMoisture = (plant['soil_moisture'] as num?)?.toInt() ?? 0;
+        if (plant == null) {
+          return const Center(child: Text("No plant found in database"));
+        }
+
+        debugPrint("PLANT DATA: $plant");
+
+        final temperature = (plant['temperature']);
+
+        final soilMoisture = (plant['moisture']);
 
         return Center(
           child: Column(
@@ -108,10 +106,7 @@ class _MyPlantViewState extends State<MyPlantView> {
             children: [
               Text(
                 'Your Basil',
-                style: textTheme.displayLarge?.copyWith(
-                  color: colorScheme.onSurface,
-                  fontSize: 32,
-                ),
+                style: textTheme.displayLarge?.copyWith(fontSize: 32),
               ),
 
               const SizedBox(height: 24),
@@ -120,14 +115,11 @@ class _MyPlantViewState extends State<MyPlantView> {
                 height: 300,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: colorScheme.surface,
                   borderRadius: BorderRadius.circular(32),
                 ),
-                child: Center(
-                  child: Image.asset(
-                    'assets/images/dummy_plant.png',
-                    fit: BoxFit.contain,
-                  ),
+                child: Image.asset(
+                  'assets/images/dummy_plant.png',
+                  fit: BoxFit.contain,
                 ),
               ),
 
@@ -137,7 +129,7 @@ class _MyPlantViewState extends State<MyPlantView> {
                 child: ListTile(
                   leading: const Icon(Icons.thermostat),
                   title: const Text('Temperature'),
-                  trailing: Text('${temperature.toStringAsFixed(1)} °C'),
+                  trailing: Text('$temperature °C'),
                 ),
               ),
 
@@ -150,7 +142,6 @@ class _MyPlantViewState extends State<MyPlantView> {
                   trailing: Text('$soilMoisture'),
                 ),
               ),
-              const SizedBox(height: 24),
             ],
           ),
         );
@@ -158,25 +149,34 @@ class _MyPlantViewState extends State<MyPlantView> {
     );
   }
 
-  void _showManualEntryDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Enter Plant Code"),
-        content: const TextField(
-          decoration: InputDecoration(hintText: "e.g. PX-2024"),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("Cancel"),
+  Widget _buildScanner() {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Center(
+      child: Column(
+        children: [
+          const SizedBox(height: 60),
+          Icon(Icons.qr_code_scanner, size: 100, color: colorScheme.secondary),
+          const SizedBox(height: 24),
+          const Text(
+            "Connect to your Plant",
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
-          TextButton(
+          const SizedBox(height: 12),
+          const Text(
+            "Scan the QR code on your plant pot to begin.",
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 40),
+          ElevatedButton(
             onPressed: () {
-              setState(() => userHasPlant = true);
-              Navigator.pop(context);
+              setState(() {
+                userHasPlant = true;
+              });
+              _refreshPlant();
+              _testFetch();
             },
-            child: const Text("Connect"),
+            child: const Text("Scan QR Code"),
           ),
         ],
       ),
