@@ -10,50 +10,27 @@ class MyPlantView extends StatefulWidget {
 
 class _MyPlantViewState extends State<MyPlantView> {
   bool userHasPlant = false;
+  Stream<List<Map<String, dynamic>>>? _plantStream;
 
-  late Future<dynamic> plantFuture;
-  late Future<dynamic> testFuture;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void _refreshPlant() {
-    final supabase = Supabase.instance.client;
-    setState(() {
-      plantFuture = supabase
-          .from('plant_pots')
-          .select('''
-      id,
-      moisture,
-      temperature,
-      water,
-      water_pass_through,
-      relay_command
-    ''')
-          .eq('device_id', "testforEPS26")
-          .maybeSingle();
-    });
-  }
-
-  void _testFetch() async {
-    final supabase = Supabase.instance.client;
-
-    try {
-      final data = await supabase
-          .from('plant_pots')
-          .select()
-          .order('created_at', ascending: false);
-
-      debugPrint("TEST DATA: $data");
-
-      setState(() {
-        testFuture = Future.value(data);
-      });
-    } catch (e) {
-      debugPrint("ERROR TEST: $e");
-    }
+  void _startStream() {
+    _plantStream = Supabase.instance.client
+        .from('plant_pots')
+        .stream(primaryKey: ['id'])
+        .eq('device_id', 'testforEPS26')
+        .map(
+          (rows) => rows
+              .map(
+                (r) => {
+                  'id': r['id'],
+                  'moisture': r['moisture'],
+                  'temperature': r['temperature'],
+                  'water': r['water'],
+                  'water_pass_through': r['water_pass_through'],
+                  'relay_command': r['relay_command'],
+                },
+              )
+              .toList(),
+        );
   }
 
   @override
@@ -67,8 +44,8 @@ class _MyPlantViewState extends State<MyPlantView> {
   Widget _buildPlantDashboard() {
     final textTheme = Theme.of(context).textTheme;
 
-    return FutureBuilder<dynamic>(
-      future: plantFuture,
+    return StreamBuilder<List<Map<String, dynamic>>>(
+      stream: _plantStream,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
@@ -88,17 +65,16 @@ class _MyPlantViewState extends State<MyPlantView> {
           );
         }
 
-        final plant = snapshot.data;
-
-        if (plant == null) {
+        final rows = snapshot.data;
+        if (rows == null || rows.isEmpty) {
           return const Center(child: Text("No plant found in database"));
         }
 
+        final plant = rows.first;
         debugPrint("PLANT DATA: $plant");
 
-        final temperature = (plant['temperature']);
-
-        final soilMoisture = (plant['moisture']);
+        final temperature = plant['temperature'];
+        final soilMoisture = plant['moisture'];
 
         return Center(
           child: Column(
@@ -170,11 +146,10 @@ class _MyPlantViewState extends State<MyPlantView> {
           const SizedBox(height: 40),
           ElevatedButton(
             onPressed: () {
+              _startStream();
               setState(() {
                 userHasPlant = true;
               });
-              _refreshPlant();
-              _testFetch();
             },
             child: const Text("Scan QR Code"),
           ),
