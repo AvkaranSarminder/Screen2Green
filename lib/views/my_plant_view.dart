@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:screen2green/components/atoms/my_special_button.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class MyPlantView extends StatefulWidget {
@@ -11,6 +12,27 @@ class MyPlantView extends StatefulWidget {
 class _MyPlantViewState extends State<MyPlantView> {
   bool userHasPlant = false;
   Stream<List<Map<String, dynamic>>>? _plantStream;
+
+  void _toggleValveState() async {
+    final supabase = Supabase.instance.client;
+
+    try {
+      await supabase
+          .from('plant_pots')
+          .update({'water_pass_through': true})
+          .eq('device_id', 'testforEPS26');
+      debugPrint('Valve ON');
+
+      await Future.delayed(const Duration(seconds: 4));
+      await supabase
+          .from('plant_pots')
+          .update({'water_pass_through': false})
+          .eq('device_id', 'testforEPS26');
+      debugPrint('Valve OFF');
+    } catch (e) {
+      debugPrint('Error toggling valve: $e');
+    }
+  }
 
   void _startStream() {
     _plantStream = Supabase.instance.client
@@ -116,6 +138,24 @@ class _MyPlantViewState extends State<MyPlantView> {
                   leading: const Icon(Icons.water_drop),
                   title: const Text('Soil Moisture'),
                   trailing: Text('$soilMoisture'),
+                ),
+              ),
+
+              const SizedBox(height: 12),
+
+              SizedBox(
+                width: double.infinity,
+                child: Center(
+                  child: MySpecialButton(
+                    'Water your plant',
+                    _toggleValveState,
+                    icon: const Icon(
+                      Icons.play_arrow_rounded,
+                      size: 20,
+                      color: Colors.white,
+                    ),
+                    gradient: true,
+                  ),
                 ),
               ),
             ],
