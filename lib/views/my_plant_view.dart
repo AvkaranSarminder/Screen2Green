@@ -23,7 +23,7 @@ class _MyPlantViewState extends State<MyPlantView> {
           .eq('device_id', 'testforEPS26');
       debugPrint('Valve ON');
 
-      await Future.delayed(const Duration(seconds: 4));
+      await Future.delayed(const Duration(seconds: 1));
       await supabase
           .from('plant_pots')
           .update({'water_pass_through': false})
